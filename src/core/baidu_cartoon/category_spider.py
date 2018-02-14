@@ -54,16 +54,18 @@ class CategorySpider(object):
             index = 1
             while hasMore:
                 try:
-                    link = self.__baseUrl + '/' + category['name']+'/'+str(index)
-                    # 转换中文 url 编码
-                    link = urllib.request.quote(link)
-                    print(link)
-                    # 把多余的转换 : ==> %3A ，还原
-                    link = link.replace('%3A', ':')
-                    # 打开链接
-                    conn = req.urlopen(link)
-                    # 以 utf-8 编码获取网页内容
-                    content = conn.read().decode('utf-8')
+                    # 判断文件是否存在
+                    if not os.path.exists(self.__filePath + category['name'] + '/list/data' + str(index) + '.json'):
+                        link = self.__baseUrl + '/' + category['name']+'/'+str(index)
+                        # 转换中文 url 编码
+                        link = urllib.request.quote(link)
+                        print(link)
+                        # 把多余的转换 : ==> %3A ，还原
+                        link = link.replace('%3A', ':')
+                        # 打开链接
+                        conn = req.urlopen(link)
+                        # 以 utf-8 编码获取网页内容
+                        content = conn.read().decode('utf-8')
 
                 except http_client.IncompleteRead as e:
                     # 处理 chunked 读取错误，由于这里都是 json 所以就不再作 gzip 验证
@@ -86,11 +88,12 @@ class CategorySpider(object):
     def get_category_form_jsonFile(self):
         # 获取所有文件夹名称
         dirNames = [name for name in os.listdir(self.__filePath)
-                    if os.path.isdir(os.path.join(self.__filePath, name))]
-        print(dirNames)
+                    if os.path.isdir(os.path.join(self.__filePath, name)) and name!='list']
+        return dirNames
 
     def run(self):
-        self.get_category()
+        # self.get_category()
+        self.get_category_form_jsonFile()
 
 categorySpider = CategorySpider()
 categorySpider.run()

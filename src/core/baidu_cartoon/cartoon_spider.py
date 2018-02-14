@@ -31,9 +31,9 @@ class CartoonSpider(object):
     def run_spider():
         category = CategorySpider()
         category.get_category()
-        category.get_category_form_jsonFile()
+        categoryNames = category.get_category_form_jsonFile()
+        print(categoryNames)
 
-        #self.GetCartoonJson()
         #cartoonPart = CartoonPartSpider(self.__categoryName)
         #cartoonPart.GetComic()
 
