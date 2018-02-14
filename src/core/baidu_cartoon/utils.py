@@ -45,12 +45,15 @@ class BaiDuCartoonUtils(object):
         categoryJson = json.loads(content)
         # pprint(categoryJson['/api/category'])
         # 判断路径是否存在
-        if not os.path.exists(self.__filePath):
-            os.makedirs(self.__filePath)
-        # 必须加上编码方式，否则中文会乱码
-        with open(self.__filePath + fileName, 'w', encoding='utf-8') as f:
-            json.dump(categoryJson, f, ensure_ascii=False)  # 这里必须要禁用系统的 ascii 编码方式
-            print("写入完成")
+        if not os.path.exists(filePath):
+            os.makedirs(filePath)
+        # 判断文件是否存在
+        if not os.path.exists(filePath+fileName):
+            # 必须加上编码方式，否则中文会乱码
+            with open(filePath + fileName, 'w', encoding='utf-8') as f:
+                json.dump(categoryJson, f, ensure_ascii=False)  # 这里必须要禁用系统的 ascii 编码方式
+                print("写入完成")
+
 
     # 获取漫画的信息
     def get_cartoon_from_json(self, filePath,categoryName):
