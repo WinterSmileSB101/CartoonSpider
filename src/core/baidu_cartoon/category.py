@@ -11,7 +11,7 @@ import os.path
 
 url = "http://cartoon.baidu.com/category"
 
-filePath = r"D:/Alvin/PersonalProjects/Python/Spider/CartoonSpider/file/categories/"
+filePath = r"H:/GIT/Python/Spider/CartoonSpider/file/categories/"
 
 user_agent = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'
 # 设置代理 IP，http 不行，使用 https

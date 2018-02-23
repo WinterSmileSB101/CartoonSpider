@@ -5,16 +5,16 @@ import urllib.request as req
 from urllib.request import urlretrieve
 from bs4 import BeautifulSoup
 import json
-from utils import BaiDuCartoonUtils
-from cartoon_part_spider import CartoonPartSpider
-from category_spider import CategorySpider
+
+from src.core.baidu_cartoon.cartoon_part_spider import CartoonPartSpider
+from src.core.baidu_cartoon.category_spider import CategorySpider
+
 
 class CartoonSpider(object):
 
-
     def __init__(self, categoryName):
         self.__categoryName = categoryName
-        self.__filePath = r"D:/Alvin/PersonalProjects/Python/Spider/CartoonSpider/file/categories/"+categoryName+'/'
+        self.__filePath = r"H:/GIT/Python/Spider/CartoonSpider/file/categories/"+categoryName+'/'
         self.__baseUrl = 'http://cartoon.baidu.com/api/query/'
         user_agent = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'
         # 设置代理 IP，http 不行，使用 https
@@ -32,10 +32,10 @@ class CartoonSpider(object):
         category = CategorySpider()
         category.get_category()
         categoryNames = category.get_category_form_jsonFile()
-        print(categoryNames)
+        for category in categoryNames:
+            print(category)
+            cartoon_part = CartoonPartSpider(category)
+            cartoon_part.GetComic()
 
         #cartoonPart = CartoonPartSpider(self.__categoryName)
         #cartoonPart.GetComic()
-
-
-CartoonSpider.run_spider()
